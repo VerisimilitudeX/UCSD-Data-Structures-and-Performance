@@ -163,14 +163,16 @@ public class AutoSpellingTextArea extends StyledTextArea<Boolean> {
 		int index;
 
 		// get first whitespace "behind caret"
-		for (index = text.length() - 1; index >= 0 && !Character.isWhitespace(text.charAt(index)); index--);
+		for (index = text.length() - 1; index >= 0 && !Character.isWhitespace(text.charAt(index)); index--)
+			;
 
 		// get prefix and startIndex of word
 		String prefix = text.substring(index + 1, text.length());
 		startIndex = index + 1;
 
 		// get first whitespace forward from caret
-        for (index = pos; index < this.getLength() && !Character.isWhitespace(this.getText().charAt(index)); index++);
+		for (index = pos; index < this.getLength() && !Character.isWhitespace(this.getText().charAt(index)); index++)
+			;
 
 		String suffix = this.getText().substring(pos, index);
 		endIndex = index;
@@ -191,7 +193,7 @@ public class AutoSpellingTextArea extends StyledTextArea<Boolean> {
 	 * Populate the entry set with the options passed in
 	 * 
 	 * @param options
-	 *            - list of auto complete options
+	 *                - list of auto complete options
 	 */
 	private List<CustomMenuItem> createOptions(List<String> options, boolean[] flags) {
 		List<CustomMenuItem> menuItems = new LinkedList<>();
@@ -271,9 +273,9 @@ public class AutoSpellingTextArea extends StyledTextArea<Boolean> {
 	 * show suggestions for word in menu at click point
 	 * 
 	 * @param word
-	 *            - word to get suggestions for
+	 *              - word to get suggestions for
 	 * @param click
-	 *            - mouse click for displaying menu
+	 *              - mouse click for displaying menu
 	 */
 	private void showSuggestions(String word, MouseEvent click) {
 		List<String> suggestions = ss.suggestions(word, NUM_SUGGESTIONS);

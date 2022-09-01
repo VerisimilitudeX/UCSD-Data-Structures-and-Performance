@@ -6,13 +6,14 @@ import java.io.IOException;
 
 public class DictionaryLoader {
 
-    /** Load the words from the dictionary file into the dictionary
+    /**
+     * Load the words from the dictionary file into the dictionary
      * 
-     * @param d  The dictionary to load
-     * @param filename The file containing the words to load.  Each word must be on a separate line.
-     */    
-	public static void loadDictionary(Dictionary d, String filename)
-    {
+     * @param d        The dictionary to load
+     * @param filename The file containing the words to load. Each word must be on a
+     *                 separate line.
+     */
+    public static void loadDictionary(Dictionary d, String filename) {
         // Dictionary files have 1 word per line
         BufferedReader reader = null;
         try {
@@ -25,17 +26,19 @@ public class DictionaryLoader {
             System.err.println("Problem loading dictionary file: " + filename);
             e.printStackTrace();
         }
-        
+
     }
-    
-    /** Load the first N words from the dictionary file into the dictionary
+
+    /**
+     * Load the first N words from the dictionary file into the dictionary
      * 
-     * @param d  The dictionary to load
-     * @param filename The file containing the words to load.  Each word must be on a separate line.
-     * @param nWords  The number of words to load.  It will load the first nWords words
+     * @param d        The dictionary to load
+     * @param filename The file containing the words to load. Each word must be on a
+     *                 separate line.
+     * @param nWords   The number of words to load. It will load the first nWords
+     *                 words
      */
-    public static void loadDictionary(Dictionary d, String filename, int nWords)
-    {
+    public static void loadDictionary(Dictionary d, String filename, int nWords) {
         // Dictionary files have 1 word per line
         BufferedReader reader = null;
         try {
@@ -47,13 +50,13 @@ public class DictionaryLoader {
                 numLoaded++;
             }
             if (numLoaded < nWords) {
-            	System.out.print("loadDicitonary Warning: End of dictionary file reached.  ");
-            	System.out.println(nWords + " requested, but only " + numLoaded + " words loaded.");
+                System.out.print("loadDicitonary Warning: End of dictionary file reached.  ");
+                System.out.println(nWords + " requested, but only " + numLoaded + " words loaded.");
             }
         } catch (IOException e) {
             System.err.println("Problem loading dictionary file: " + filename);
             e.printStackTrace();
-        }    	
-    	
+        }
+
     }
 }

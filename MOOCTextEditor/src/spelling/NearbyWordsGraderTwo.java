@@ -43,7 +43,7 @@ public class NearbyWordsGraderTwo {
                 feedback += i + ", ";
             }
             feedback += "\n";
-            
+
         } catch (Exception e) {
             out.println(feedback + "Runtime error: " + e);
             return;

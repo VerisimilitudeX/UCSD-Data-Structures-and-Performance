@@ -6,14 +6,12 @@ import java.io.PrintWriter;
 
 public class EfficientDocumentGrader {
     public static void main(String[] args) {
-        try
-        {
+        try {
             System.out.println("Sentences, words, and syllables:");
             BufferedReader br = new BufferedReader(new FileReader("test_cases/mod2TestCases.txt"));
             String line;
             PrintWriter out = new PrintWriter("grader_output/module2.part1.out", "utf-8");
-            while ((line = br.readLine()) != null)
-            {
+            while ((line = br.readLine()) != null) {
                 EfficientDocument doc = new EfficientDocument(line);
                 String result = doc.getNumSentences() + " " + doc.getNumWords() + " " + doc.getNumSyllables() + " ";
                 System.out.print(result);
@@ -22,9 +20,7 @@ public class EfficientDocumentGrader {
             out.print("\n");
             out.close();
             br.close();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
