@@ -8,7 +8,7 @@ public class MyLinkedListGrader {
 
 	PrintWriter out;
 
-	public String printListForwards(MyLinkedList<Integer> lst) {
+	public String printListForwards(final MyLinkedList<Integer> lst) {
 		LLNode<Integer> curr;
 		String ret = "";
 		if (lst.head.data == null)
@@ -23,7 +23,7 @@ public class MyLinkedListGrader {
 		return ret;
 	}
 
-	public String printListBackwards(MyLinkedList<Integer> lst) {
+	public String printListBackwards(final MyLinkedList<Integer> lst) {
 		LLNode<Integer> curr;
 		String ret = "";
 		if (lst.tail.data == null)
@@ -38,20 +38,20 @@ public class MyLinkedListGrader {
 	}
 
 	public void doTest() {
-		int incorrect = 0;
-		int tests = 0;
+		final int incorrect = 0;
+		final int tests = 0;
 		String feedback = "";
 		try {
 			out = new PrintWriter("grader_output/module3.part1.out", "utf-8");
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 			return;
 		}
 		MyLinkedList<Integer> lst = new MyLinkedList<Integer>();
-		int nums[] = { 1, 2, 3, 4, 5 };
+		final int nums[] = { 1, 2, 3, 4, 5 };
 
 		feedback += "** Test #1: Adding to end of list...";
-		for (int i : nums) {
+		for (final int i : nums) {
 			lst.add(i);
 		}
 		feedback += "Got " + printListForwards(lst) + ". ";
@@ -97,8 +97,8 @@ public class MyLinkedListGrader {
 
 	}
 
-	public static void main(String args[]) {
-		MyLinkedListGrader grader = new MyLinkedListGrader();
+	public static void main(final String args[]) {
+		final MyLinkedListGrader grader = new MyLinkedListGrader();
 		grader.doTest();
 	}
 

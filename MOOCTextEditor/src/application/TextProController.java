@@ -72,7 +72,7 @@ public class TextProController {
 		launch = new LaunchClass();
 
 		// instantiate and add custom text area
-		spelling.Dictionary dic = launch.getDictionary();
+		final spelling.Dictionary dic = launch.getDictionary();
 		textBox = new AutoSpellingTextArea(launch.getAutoComplete(), launch.getSpellingSuggest(dic), dic);
 		textBox.setPrefSize(570, 492);
 		textBox.setStyle("-fx-font-size: 14px");
@@ -80,8 +80,8 @@ public class TextProController {
 		textBox.setWrapText(true);
 
 		// add text area as first child of left VBox
-		ObservableList<Node> nodeList = leftPane.getChildren();
-		Node firstChild = nodeList.get(0);
+		final ObservableList<Node> nodeList = leftPane.getChildren();
+		final Node firstChild = nodeList.get(0);
 		nodeList.set(0, textBox);
 		nodeList.add(firstChild);
 
@@ -99,7 +99,7 @@ public class TextProController {
 		});
 
 		// function for setting spacing of rightBox
-		Consumer<VBox> adjustSpacing = box -> {
+		final Consumer<VBox> adjustSpacing = box -> {
 			if (container.getHeight() < RBOX_THRESHOLD) {
 				rightBox.setSpacing((container.getHeight() - CONTROL_HEIGHT) / SPACE_DIV);
 			} else {
@@ -128,26 +128,26 @@ public class TextProController {
 	 * 
 	 * @param mainApp
 	 */
-	public void setMainApp(MainApp mainApp) {
+	public void setMainApp(final MainApp mainApp) {
 		this.mainApp = mainApp;
 
 	}
 
 	@FXML
 	private void handleFleschIndex() {
-		String text = textBox.getText();
+		final String text = textBox.getText();
 		double fIndex = 0;
 
 		// check if text input
 		if (!text.equals("")) {
 
 			// create Document representation of current text
-			document.Document doc = launch.getDocument(text);
+			final document.Document doc = launch.getDocument(text);
 
 			fIndex = doc.getFleschScore();
 
 			// get string with two decimal places for index to
-			String fString = String.format("%.2f", fIndex);
+			final String fString = String.format("%.2f", fIndex);
 
 			// display string in text field
 			fleschField.setText(fString);
@@ -172,7 +172,7 @@ public class TextProController {
 
 	@FXML
 	private void handleEditDistance() {
-		String selectedText = textBox.getSelectedText();
+		final String selectedText = textBox.getSelectedText();
 		mainApp.showEditDistanceDialog(selectedText);
 
 	}
@@ -180,9 +180,9 @@ public class TextProController {
 	@FXML
 	private void handleMarkovText() {
 		// get MTG object
-		textgen.MarkovTextGenerator mtg = launch.getMTG();
+		final textgen.MarkovTextGenerator mtg = launch.getMTG();
 
-		Task<textgen.MarkovTextGenerator> task = new Task<textgen.MarkovTextGenerator>() {
+		final Task<textgen.MarkovTextGenerator> task = new Task<textgen.MarkovTextGenerator>() {
 			@Override
 			public textgen.MarkovTextGenerator call() {
 				// process long-running computation, data retrieval, etc...
@@ -210,11 +210,11 @@ public class TextProController {
 		// MTG trained, close loading dialog, show MTG dialog
 		task.setOnSucceeded(e -> {
 			loadStage.close();
-			textgen.MarkovTextGenerator result = task.getValue();
+			final textgen.MarkovTextGenerator result = task.getValue();
 			mainApp.showMarkovDialog(result);
 		});
 
-		Thread thread = new Thread(task);
+		final Thread thread = new Thread(task);
 		thread.start();
 
 	}

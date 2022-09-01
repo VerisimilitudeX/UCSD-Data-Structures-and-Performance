@@ -30,11 +30,11 @@ public class EditDistanceDialogController {
 	 * 
 	 * @param dialogStage
 	 */
-	public void setDialogStage(Stage dialogStage) {
+	public void setDialogStage(final Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}
 
-	public void setField(String text) {
+	public void setField(final String text) {
 		word1.setText(text);
 	}
 
@@ -45,13 +45,13 @@ public class EditDistanceDialogController {
 	private void handleOk() {
 		if (isInputValid()) {
 
-			Task<List<String>> task = new Task<List<String>>() {
+			final Task<List<String>> task = new Task<List<String>>() {
 				@Override
 				public List<String> call() {
 					// get word path
-					LaunchClass launch = new LaunchClass();
-					spelling.WordPath wp = launch.getWordPath();
-					List<String> path = wp.findPath(word1.getText(), word2.getText());
+					final LaunchClass launch = new LaunchClass();
+					final spelling.WordPath wp = launch.getWordPath();
+					final List<String> path = wp.findPath(word1.getText(), word2.getText());
 					return path;
 				}
 			};
@@ -78,7 +78,7 @@ public class EditDistanceDialogController {
 				mainApp.showEDResult(task.getValue());
 			});
 
-			Thread thread = new Thread(task);
+			final Thread thread = new Thread(task);
 			thread.start();
 
 		} else {
@@ -94,7 +94,7 @@ public class EditDistanceDialogController {
 	 * 
 	 * @param mainApp
 	 */
-	public void setMainApp(MainApp mainApp) {
+	public void setMainApp(final MainApp mainApp) {
 		this.mainApp = mainApp;
 	}
 

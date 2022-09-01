@@ -24,7 +24,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 * 
 	 * @param element The element to add
 	 */
-	public boolean add(E element) {
+	public boolean add(final E element) {
 		// TODO: Implement this method
 		return false;
 	}
@@ -34,7 +34,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 * 
 	 * @throws IndexOutOfBoundsException if the index is out of bounds.
 	 */
-	public E get(int index) {
+	public E get(final int index) {
 		// TODO: Implement this method.
 		return null;
 	}
@@ -45,7 +45,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 * @param The     index where the element should be added
 	 * @param element The element to add
 	 */
-	public void add(int index, E element) {
+	public void add(final int index, final E element) {
 		// TODO: Implement this method
 	}
 
@@ -63,7 +63,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 * @throws IndexOutOfBoundsException If index is outside the bounds of the list
 	 * 
 	 */
-	public E remove(int index) {
+	public E remove(final int index) {
 		// TODO: Implement this method
 		return null;
 	}
@@ -76,7 +76,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 * @return The element that was replaced
 	 * @throws IndexOutOfBoundsException if the index is out of bounds.
 	 */
-	public E set(int index, E element) {
+	public E set(final int index, final E element) {
 		// TODO: Implement this method
 		return null;
 	}
@@ -90,7 +90,7 @@ class LLNode<E> {
 	// TODO: Add any other methods you think are useful here
 	// E.g. you might want to add another constructor
 
-	public LLNode(E e) {
+	public LLNode(final E e) {
 		this.data = e;
 		this.prev = null;
 		this.next = null;

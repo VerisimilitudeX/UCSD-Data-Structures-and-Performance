@@ -16,7 +16,7 @@ import org.junit.Test;
  */
 public class DictionaryBSTTester {
 
-	private String dictFile = "data/words.small.txt";
+	private final String dictFile = "data/words.small.txt";
 
 	DictionaryBST emptyDict;
 	DictionaryBST smallDict;

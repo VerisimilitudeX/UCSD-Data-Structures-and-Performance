@@ -20,7 +20,7 @@ public class DictionaryBST implements Dictionary {
      * @return true if the word was added to the dictionary
      *         (it wasn't already there).
      */
-    public boolean addWord(String word) {
+    public boolean addWord(final String word) {
         // TODO: Implement this method
         return false;
     }
@@ -32,7 +32,7 @@ public class DictionaryBST implements Dictionary {
     }
 
     /** Is this a word according to this dictionary? */
-    public boolean isWord(String s) {
+    public boolean isWord(final String s) {
         // TODO: Implement this method
         return false;
     }

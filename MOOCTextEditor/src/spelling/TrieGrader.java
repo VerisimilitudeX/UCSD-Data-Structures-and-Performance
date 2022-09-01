@@ -11,19 +11,19 @@ public class TrieGrader {
         feedback = new StringBuilder();
     }
 
-    public static void main(String[] args) {
-        TrieGrader g = new TrieGrader();
+    public static void main(final String[] args) {
+        final TrieGrader g = new TrieGrader();
 
         PrintWriter out;
         try {
             out = new PrintWriter("output.out");
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
             return;
         }
 
         try {
-            AutoCompleteDictionaryTrie ac = new AutoCompleteDictionaryTrie();
+            final AutoCompleteDictionaryTrie ac = new AutoCompleteDictionaryTrie();
 
             g.testAddWords(ac);
 
@@ -31,19 +31,19 @@ public class TrieGrader {
 
             g.testPredictions(ac);
 
-        } catch (Exception e) {
+        } catch (final Exception e) {
             out.println(g.getFeedback() + "Error during runtime: " + e);
             out.close();
             return;
         }
 
-        StringBuilder feedback = g.getFeedback();
+        final StringBuilder feedback = g.getFeedback();
 
         out.println(feedback.toString());
         out.close();
     }
 
-    private void testAddWords(AutoCompleteDictionaryTrie ac) {
+    private void testAddWords(final AutoCompleteDictionaryTrie ac) {
         feedback.append("//TESTING ADDING WORDS (addWord, insert)//");
         appendTestString(1, "Adding first word to dictionary...");
         feedback.append("addWord returned " + ac.addWord("dog") + ".");
@@ -89,7 +89,7 @@ public class TrieGrader {
         feedback.append("Dict size is " + ac.size() + ".");
     }
 
-    private void testWordsInOut(AutoCompleteDictionaryTrie ac) {
+    private void testWordsInOut(final AutoCompleteDictionaryTrie ac) {
 
         feedback.append("\n\n\n//TESTING FOR WORDS IN/OUT OF DICTIONARY (isWord)//");
         appendTestString(6, "Checking empty string...");
@@ -116,14 +116,14 @@ public class TrieGrader {
 
     }
 
-    private void testPredictions(AutoCompleteDictionaryTrie ac) {
+    private void testPredictions(final AutoCompleteDictionaryTrie ac) {
 
         feedback.append("\n\n\n//TESTING AUTO COMPLETE FUNCTIONALITY (predictCompletions)//");
         List<String> auto = ac.predictCompletions("dog", 3);
 
         appendTestString(12, "3 completions requested...");
         feedback.append("Autocomplete returned the following: ");
-        for (String s : auto) {
+        for (final String s : auto) {
             feedback.append(s + ", ");
         }
 
@@ -140,7 +140,7 @@ public class TrieGrader {
 
         appendTestString(16, "Testing for correctness of 6 words...");
         feedback.append("Words returned by predictCompletions: ");
-        for (String s : auto) {
+        for (final String s : auto) {
             feedback.append(s + ", ");
         }
 
@@ -171,7 +171,7 @@ public class TrieGrader {
 
     }
 
-    private void appendTestString(int num, String description) {
+    private void appendTestString(final int num, final String description) {
         feedback.append("\n\n** Test #" + num + ": " + description + "\n");
     }
 

@@ -13,7 +13,7 @@ public class BasicDocument extends Document {
 	 * 
 	 * @param text The full text of the Document.
 	 */
-	public BasicDocument(String text) {
+	public BasicDocument(final String text) {
 		super(text);
 	}
 
@@ -25,17 +25,13 @@ public class BasicDocument extends Document {
 	 * have
 	 * any strings that combine numbers and letters.
 	 * 
-	 * Check the examples in the main method below for more information.
-	 * 
 	 * This method should process the entire text string each time it is called.
 	 * 
 	 * @return The number of words in the document.
 	 */
 	@Override
 	public int getNumWords() {
-		// TODO: Implement this method in week 2 according to the comments above.
-		// See the Module 2 support videos if you need help.
-		return 0;
+		return text.split("[a-zA-Z]+").length;
 	}
 
 	/**
@@ -44,14 +40,13 @@ public class BasicDocument extends Document {
 	 * end of sentence punctuation (. ! or ?) or the last contiguous set of
 	 * characters in the document, even if they don't end with a punctuation mark.
 	 * 
-	 * Check the examples in the main method below for more information.
-	 * 
 	 * This method should process the entire text string each time it is called.
 	 * 
 	 * @return The number of sentences in the document.
 	 */
 	@Override
 	public int getNumSentences() {
+		text.split("[.!?]");
 		// TODO: Implement this method. See the Module 2 support videos
 		// if you need help.
 		return 0;
@@ -77,15 +72,19 @@ public class BasicDocument extends Document {
 		// if you need help. And note that there is no need to use a regular
 		// expression for the syllable counting. We recommend you implement
 		// the helper function countSyllables in Document.java using a loop,
-		// and then call it here on each word.
-		return 0;
+		// and then call it here on each word.		
+		int totalSyllables = 0;
+		for (String word : text.split(" ")) {
+			totalSyllables += countSyllables(word);
+		}
+		return totalSyllables;
 	}
 
 	/*
 	 * The main method for testing this class.
 	 * You are encouraged to add your own tests.
 	 */
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		/*
 		 * Each of the test cases below uses the method testCase. The first
 		 * argument to testCase is a Document object, created with the string shown.

@@ -3,21 +3,21 @@ package spelling;
 import java.io.PrintWriter;
 
 public class DictionaryGrader {
-    public static void main(String args[]) {
+    public static void main(final String args[]) {
         PrintWriter out;
         try {
             out = new PrintWriter("grader_output/module4.part1.out");
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
             return;
         }
 
-        int incorrect = 0;
-        int tests = 0;
+        final int incorrect = 0;
+        final int tests = 0;
         String feedback = "";
 
         try {
-            Dictionary dictLL = new DictionaryLL();
+            final Dictionary dictLL = new DictionaryLL();
 
             feedback += "** Test #1: Adding new word to the LL dictionary...";
             feedback += "addWord returned " + dictLL.addWord("tEst") + ".\n";
@@ -29,7 +29,7 @@ public class DictionaryGrader {
             feedback += "** Test #3: Looking up word from first test...";
             feedback += "isWord returned " + dictLL.isWord("teSt") + ".\n";
 
-            Dictionary dictBST = new DictionaryBST();
+            final Dictionary dictBST = new DictionaryBST();
 
             feedback += "** Test #4: Adding a new word to the BST dictionary...";
             feedback += "addWord returned " + dictBST.addWord("tEst") + ".\n";
@@ -55,7 +55,7 @@ public class DictionaryGrader {
             feedback += "** Test #9: Testing non-word in DictBST...";
             feedback += "isWord(soup) returned " + dictBST.isWord("soup") + ".\n";
 
-        } catch (Exception e) {
+        } catch (final Exception e) {
             out.println("Runtime error: " + e);
             out.close();
             return;

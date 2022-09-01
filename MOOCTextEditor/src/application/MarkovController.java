@@ -26,7 +26,7 @@ public class MarkovController {
      * 
      * @param dialogStage
      */
-    public void setDialogStage(Stage dialogStage) {
+    public void setDialogStage(final Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
 
@@ -36,7 +36,7 @@ public class MarkovController {
     @FXML
     private void handleGenerate() {
         if (isInputValid()) {
-            String mText = mtg.generateText(Integer.parseInt(numWordsField.getText()));
+            final String mText = mtg.generateText(Integer.parseInt(numWordsField.getText()));
             setResult(mText);
         } else {
             // display error pop-up
@@ -50,15 +50,15 @@ public class MarkovController {
      * 
      * @param mainApp
      */
-    public void setMainApp(MainApp mainApp) {
+    public void setMainApp(final MainApp mainApp) {
         this.mainApp = mainApp;
     }
 
-    public void setMTG(textgen.MarkovTextGenerator mtg) {
+    public void setMTG(final textgen.MarkovTextGenerator mtg) {
         this.mtg = mtg;
     }
 
-    public void setResult(String result) {
+    public void setResult(final String result) {
         resultBox.setText(result);
     }
 
@@ -75,7 +75,7 @@ public class MarkovController {
      * @return true if valid, false if not
      */
     private boolean isInputValid() {
-        String numString = numWordsField.getText();
+        final String numString = numWordsField.getText();
         return !(numString.equals("") || !isInteger(numString)
                 || (Integer.parseInt(numString) <= 0));
     }
@@ -86,10 +86,10 @@ public class MarkovController {
      * @param str
      * @return true if string is able to be parsed as an integer.
      */
-    public static boolean isInteger(String str) {
+    public static boolean isInteger(final String str) {
         try {
             Integer.parseInt(str);
-        } catch (NumberFormatException nfe) {
+        } catch (final NumberFormatException nfe) {
             return false;
         }
 

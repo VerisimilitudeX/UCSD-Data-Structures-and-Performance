@@ -19,7 +19,7 @@ import java.util.List;
 public class WPTree implements WordPath {
 
     // this is the root node of the WPTree
-    private WPTreeNode root;
+    private final WPTreeNode root;
     // used to search for nearby Words
     private NearbyWords nw;
 
@@ -34,22 +34,22 @@ public class WPTree implements WordPath {
     }
 
     // This constructor will be used by the grader code
-    public WPTree(NearbyWords nw) {
+    public WPTree(final NearbyWords nw) {
         this.root = null;
         this.nw = nw;
     }
 
     // see method description in WordPath interface
-    public List<String> findPath(String word1, String word2) {
+    public List<String> findPath(final String word1, final String word2) {
         // TODO: Implement this method.
         return new LinkedList<String>();
     }
 
     // Method to print a list of WPTreeNodes (useful for debugging)
-    private String printQueue(List<WPTreeNode> list) {
+    private String printQueue(final List<WPTreeNode> list) {
         String ret = "[ ";
 
-        for (WPTreeNode w : list) {
+        for (final WPTreeNode w : list) {
             ret += w.getWord() + ", ";
         }
         ret += "]";
@@ -67,9 +67,9 @@ public class WPTree implements WordPath {
  */
 class WPTreeNode {
 
-    private String word;
-    private List<WPTreeNode> children;
-    private WPTreeNode parent;
+    private final String word;
+    private final List<WPTreeNode> children;
+    private final WPTreeNode parent;
 
     /**
      * Construct a node with the word w and the parent p
@@ -78,7 +78,7 @@ class WPTreeNode {
      * @param w The new node's word
      * @param p The new node's parent
      */
-    public WPTreeNode(String w, WPTreeNode p) {
+    public WPTreeNode(final String w, final WPTreeNode p) {
         this.word = w;
         this.parent = p;
         this.children = new LinkedList<WPTreeNode>();
@@ -91,8 +91,8 @@ class WPTreeNode {
      * @param s The child node's word
      * @return The new WPTreeNode
      */
-    public WPTreeNode addChild(String s) {
-        WPTreeNode child = new WPTreeNode(s, this);
+    public WPTreeNode addChild(final String s) {
+        final WPTreeNode child = new WPTreeNode(s, this);
         this.children.add(child);
         return child;
     }
@@ -116,7 +116,7 @@ class WPTreeNode {
      */
     public List<String> buildPathToRoot() {
         WPTreeNode curr = this;
-        List<String> path = new LinkedList<String>();
+        final List<String> path = new LinkedList<String>();
         while (curr != null) {
             path.add(0, curr.getWord());
             curr = curr.parent;
@@ -146,7 +146,7 @@ class WPTreeNode {
             ret += this.parent.getWord() + "\n";
         }
         ret += "[ ";
-        for (WPTreeNode curr : children) {
+        for (final WPTreeNode curr : children) {
             ret += curr.getWord() + ", ";
         }
         ret += (" ]\n");

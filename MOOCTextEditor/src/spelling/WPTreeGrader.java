@@ -8,7 +8,7 @@ import java.util.List;
 // make sure it still points to data/dict.txt.
 
 public class WPTreeGrader {
-    public static String printPath(List<String> path) {
+    public static String printPath(final List<String> path) {
         if (path == null) {
             return "NULL PATH";
         }
@@ -22,24 +22,24 @@ public class WPTreeGrader {
         return ret;
     }
 
-    public static void main(String[] args) {
-        int incorrect = 0;
-        int tests = 0;
+    public static void main(final String[] args) {
+        final int incorrect = 0;
+        final int tests = 0;
         String feedback = "";
 
         PrintWriter out;
         try {
             out = new PrintWriter("grader_output/module5.part3.out");
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
             return;
         }
 
         try {
 
-            Dictionary dict = new DictionaryHashSet();
+            final Dictionary dict = new DictionaryHashSet();
             DictionaryLoader.loadDictionary(dict, "data/grader_dict.txt");
-            WPTree tree = new WPTree(new NearbyWords(dict));
+            final WPTree tree = new WPTree(new NearbyWords(dict));
 
             List<String> path = tree.findPath("pool", "spoon");
 
@@ -60,7 +60,7 @@ public class WPTreeGrader {
 
             feedback += "** Test #4: Testing using a nonexistent word...";
             feedback += "Your path was: " + printPath(path) + ".\n";
-        } catch (Exception e) {
+        } catch (final Exception e) {
             out.println(e);
             out.close();
             return;

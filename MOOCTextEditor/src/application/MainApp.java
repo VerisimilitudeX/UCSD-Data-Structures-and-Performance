@@ -26,7 +26,7 @@ public class MainApp extends Application {
 
 	// called at start of application
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(final Stage primaryStage) {
 
 		this.primaryStage = primaryStage;
 
@@ -34,9 +34,9 @@ public class MainApp extends Application {
 
 		try {
 			// Load root layout from fxml
-			FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("view/RootLayout.fxml"));
+			final FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("view/RootLayout.fxml"));
 			rootLayout = (BorderPane) loader.load();
-			Scene scene = new Scene(rootLayout);
+			final Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
 
 			// min height and width calculated from components in TextAppLayout
@@ -44,7 +44,7 @@ public class MainApp extends Application {
 			primaryStage.setMinWidth(334);
 			primaryStage.show();
 
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 		}
 
@@ -57,16 +57,16 @@ public class MainApp extends Application {
 	public void showTextProApp() {
 		try {
 			// Load the fxml file and set into the center of the main layout
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("view/TextAppLayout.fxml"));
+			final FXMLLoader loader = new FXMLLoader(getClass().getResource("view/TextAppLayout.fxml"));
 
-			HBox textProPage = (HBox) loader.load();
+			final HBox textProPage = (HBox) loader.load();
 			rootLayout.setCenter(textProPage);
 
 			// Connect controller and main app
-			TextProController controller = loader.getController();
+			final TextProController controller = loader.getController();
 			controller.setMainApp(this);
 
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			// Exception gets thrown if the fxml file could not be loaded
 			e.printStackTrace();
 		}
@@ -79,8 +79,8 @@ public class MainApp extends Application {
 	 * 
 	 * @param inErr - message to dispaly
 	 */
-	public void showInputErrorDialog(String inErr) {
-		Alert alert = new Alert(AlertType.ERROR);
+	public void showInputErrorDialog(final String inErr) {
+		final Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
 		alert.setHeaderText("Input Error");
 		alert.setContentText(inErr);
@@ -95,20 +95,20 @@ public class MainApp extends Application {
 	 * @param ta - reference to TextArea to display loaded text file
 	 * 
 	 */
-	public void showLoadFileDialog(AutoSpellingTextArea ta) {
+	public void showLoadFileDialog(final AutoSpellingTextArea ta) {
 		try {
 			// Load the fxml file and create a new stage for the popup
-			FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("view/LoadFileLayout.fxml"));
-			VBox page = (VBox) loader.load();
-			Stage dialogStage = new Stage();
+			final FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("view/LoadFileLayout.fxml"));
+			final VBox page = (VBox) loader.load();
+			final Stage dialogStage = new Stage();
 			dialogStage.setTitle("Load File");
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(primaryStage);
-			Scene scene = new Scene(page);
+			final Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
 
 			// Set reference to stage in controller
-			LoadFileDialogController controller = loader.getController();
+			final LoadFileDialogController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 
 			// give controller reference to text area to load file into
@@ -117,27 +117,27 @@ public class MainApp extends Application {
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
 
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			// Exception gets thrown if the fxml file could not be loaded
 			e.printStackTrace();
 		}
 
 	}
 
-	public void showEditDistanceDialog(String selectedText) {
+	public void showEditDistanceDialog(final String selectedText) {
 		try {
 			// Load the fxml file and create a new stage for the popup
-			FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("view/EditDistanceLayout.fxml"));
-			VBox page = (VBox) loader.load();
-			Stage dialogStage = new Stage();
+			final FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("view/EditDistanceLayout.fxml"));
+			final VBox page = (VBox) loader.load();
+			final Stage dialogStage = new Stage();
 			dialogStage.setTitle("Calculate Edit Distance");
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(primaryStage);
-			Scene scene = new Scene(page);
+			final Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
 
 			// Set reference to stage in controller
-			EditDistanceDialogController controller = loader.getController();
+			final EditDistanceDialogController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(this);
 			controller.setField(selectedText);
@@ -147,32 +147,32 @@ public class MainApp extends Application {
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
 
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			// Exception gets thrown if the fxml file could not be loaded
 			e.printStackTrace();
 		}
 
 	}
 
-	public void showEDResult(List<String> path) {
+	public void showEDResult(final List<String> path) {
 		// intialize alert/dialog to display edit distance result
-		Alert alert = new Alert(AlertType.INFORMATION);
+		final Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Result");
 		alert.setHeaderText("Word Path : ");
 		alert.initModality(Modality.NONE);
 		alert.setResizable(true);
 
 		// create layout for content
-		VBox box = new VBox();
-		HBox midBox = new HBox();
+		final VBox box = new VBox();
+		final HBox midBox = new HBox();
 		box.setPadding(new Insets(35, 0, 35, 0));
 		box.setSpacing(35);
 		midBox.setSpacing(15);
 
-		Label pathLabel = new Label();
-		Label numStepsLabel = new Label("Number of steps : ");
-		Label numSteps = new Label();
-		Font font = new Font(14);
+		final Label pathLabel = new Label();
+		final Label numStepsLabel = new Label("Number of steps : ");
+		final Label numSteps = new Label();
+		final Font font = new Font(14);
 		pathLabel.setFont(font);
 		numStepsLabel.setFont(font);
 		numSteps.setFont(Font.font(font.getFamily(), FontWeight.BOLD, 14));
@@ -191,7 +191,7 @@ public class MainApp extends Application {
 			numSteps.setText(Integer.toString(path.size() - 1));
 			pathLabel.setText(String.join(" -> ", path));
 
-			Text text = new Text(pathLabel.getText());
+			final Text text = new Text(pathLabel.getText());
 			text.setFont(font);
 			if (text.getLayoutBounds().getWidth() > 200) {
 				alert.getDialogPane().setPrefWidth(text.getLayoutBounds().getWidth() + 100);
@@ -212,21 +212,21 @@ public class MainApp extends Application {
 		alert.showAndWait();
 	}
 
-	public void showMarkovDialog(textgen.MarkovTextGenerator mtg) {
+	public void showMarkovDialog(final textgen.MarkovTextGenerator mtg) {
 		try {
 			// Load the fxml file and create a new stage for the popup
-			FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("view/MarkovLayout.fxml"));
-			BorderPane page = (BorderPane) loader.load();
-			Stage dialogStage = new Stage();
+			final FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("view/MarkovLayout.fxml"));
+			final BorderPane page = (BorderPane) loader.load();
+			final Stage dialogStage = new Stage();
 			dialogStage.setTitle("Markov Text Generator");
 			// dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(primaryStage);
-			Scene scene = new Scene(page);
+			final Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
 
 			// Set reference to stage in controller
 			// BUG -- when first displayed results don't show up until resize window
-			MarkovController controller = loader.getController();
+			final MarkovController controller = loader.getController();
 			// controller.setDialogStage(dialogStage);
 			controller.setMainApp(this);
 			controller.setMTG(mtg);
@@ -234,30 +234,30 @@ public class MainApp extends Application {
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
 
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			// Exception gets thrown if the fxml file could not be loaded
 			e.printStackTrace();
 		}
 
 	}
 
-	public void showLoadStage(Stage loadStage, String text) {
+	public void showLoadStage(final Stage loadStage, final String text) {
 		loadStage.initModality(Modality.APPLICATION_MODAL);
 		loadStage.initOwner(primaryStage);
-		VBox loadVBox = new VBox(20);
+		final VBox loadVBox = new VBox(20);
 		loadVBox.setAlignment(Pos.CENTER);
-		Text tNode = new Text(text);
+		final Text tNode = new Text(text);
 		tNode.setFont(new Font(16));
 		loadVBox.getChildren().add(new HBox());
 		loadVBox.getChildren().add(tNode);
 		loadVBox.getChildren().add(new HBox());
-		Scene loadScene = new Scene(loadVBox, 300, 200);
+		final Scene loadScene = new Scene(loadVBox, 300, 200);
 		loadStage.setScene(loadScene);
 		loadStage.show();
 	}
 
 	// MAIN
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		launch(args);
 	}
 

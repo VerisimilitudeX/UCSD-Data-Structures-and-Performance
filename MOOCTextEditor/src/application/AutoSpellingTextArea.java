@@ -39,7 +39,7 @@ public class AutoSpellingTextArea extends StyledTextArea<Boolean> {
 
 	// matches case of user typing for auto complete and ss
 	// turn off if handling caps
-	private boolean matchCase = true;
+	private final boolean matchCase = true;
 
 	// indices which contain word, set by getWordAtIndex
 	private int startIndex;
@@ -49,11 +49,11 @@ public class AutoSpellingTextArea extends StyledTextArea<Boolean> {
 	private List<String> options;
 
 	// popup to display/select entry
-	private ContextMenu entriesPopup;
+	private final ContextMenu entriesPopup;
 
-	private spelling.AutoComplete ac;
-	private spelling.Dictionary dic;
-	private spelling.SpellingSuggest ss;
+	private final spelling.AutoComplete ac;
+	private final spelling.Dictionary dic;
+	private final spelling.SpellingSuggest ss;
 
 	// set up reflection for spelling suggest
 	private static Method mHit;
@@ -77,7 +77,7 @@ public class AutoSpellingTextArea extends StyledTextArea<Boolean> {
 
 	// end set up reflection
 
-	public AutoSpellingTextArea(spelling.AutoComplete ac, spelling.SpellingSuggest ss, spelling.Dictionary dic) {
+	public AutoSpellingTextArea(final spelling.AutoComplete ac, final spelling.SpellingSuggest ss, final spelling.Dictionary dic) {
 		super(true, (textNode, correct) -> {
 			// define boolean Text node style
 			if (!correct) {
@@ -102,16 +102,16 @@ public class AutoSpellingTextArea extends StyledTextArea<Boolean> {
 				styledView = getChildrenUnmodifiable().get(0);
 
 				// get character hit on click and index
-				Object chHit = invoke(mHit, styledView, e.getX(), e.getY());
-				OptionalInt opInt = (OptionalInt) invoke(mGetCharacterIndex, chHit);
+				final Object chHit = invoke(mHit, styledView, e.getX(), e.getY());
+				final OptionalInt opInt = (OptionalInt) invoke(mGetCharacterIndex, chHit);
 
 				// valid index clicked
 				if (opInt.isPresent()) {
-					int index = opInt.getAsInt();
+					final int index = opInt.getAsInt();
 
 					// check if index corresponds to misspelled word
 					if (!getStyleOfChar(index)) {
-						String possibleWord = getWordAtIndex(index);
+						final String possibleWord = getWordAtIndex(index);
 						showSuggestions(possibleWord, e);
 					}
 				}
@@ -140,7 +140,7 @@ public class AutoSpellingTextArea extends StyledTextArea<Boolean> {
 		this.caretPositionProperty().addListener((obs, oldPosition, newPosition) -> {
 			if (autoCompleteOn) {
 				// listen to textProperty to only
-				String prefix = getWordAtIndex(newPosition.intValue());
+				final String prefix = getWordAtIndex(newPosition.intValue());
 				showCompletions(prefix);
 			}
 
@@ -156,8 +156,8 @@ public class AutoSpellingTextArea extends StyledTextArea<Boolean> {
 	 * @return word at index
 	 */
 
-	private String getWordAtIndex(int pos) {
-		String text = this.getText().substring(0, pos);
+	private String getWordAtIndex(final int pos) {
+		final String text = this.getText().substring(0, pos);
 
 		// keeping track of index
 		int index;
@@ -195,10 +195,10 @@ public class AutoSpellingTextArea extends StyledTextArea<Boolean> {
 	 * @param options
 	 *                - list of auto complete options
 	 */
-	private List<CustomMenuItem> createOptions(List<String> options, boolean[] flags) {
-		List<CustomMenuItem> menuItems = new LinkedList<>();
+	private List<CustomMenuItem> createOptions(final List<String> options, final boolean[] flags) {
+		final List<CustomMenuItem> menuItems = new LinkedList<>();
 		// If you'd like more entries, modify this line.
-		int count = Math.min(options.size(), NUM_SUGGESTIONS);
+		final int count = Math.min(options.size(), NUM_SUGGESTIONS);
 
 		// add options to ContextMenu
 		for (int i = 0; i < count; i++) {
@@ -213,13 +213,13 @@ public class AutoSpellingTextArea extends StyledTextArea<Boolean> {
 
 			final String result = str;
 
-			Label entryLabel = new Label(result);
-			CustomMenuItem item = new CustomMenuItem(entryLabel, true);
+			final Label entryLabel = new Label(result);
+			final CustomMenuItem item = new CustomMenuItem(entryLabel, true);
 
 			// register event where user chooses word (click)
 			item.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
-				public void handle(ActionEvent actionEvent) {
+				public void handle(final ActionEvent actionEvent) {
 					needUpdate = false;
 					replaceText(startIndex, endIndex, result);
 					getWordAtIndex(startIndex);
@@ -240,22 +240,22 @@ public class AutoSpellingTextArea extends StyledTextArea<Boolean> {
 	 * @return StyleSpans with misspelled words set to style false (!correct)
 	 */
 	public StyleSpans<Boolean> checkSpelling() {
-		String text = getText();
+		final String text = getText();
 		String word;
 
 		// keep track of end of matcher
 		int lastEnd = 0;
-		StyleSpansBuilder<Boolean> spansBuilder = new StyleSpansBuilder<>();
+		final StyleSpansBuilder<Boolean> spansBuilder = new StyleSpansBuilder<>();
 
 		// Pattern and Matcher to get whitespace delimited words
-		Pattern pattern = Pattern.compile("[\\w'-]+", Pattern.CASE_INSENSITIVE);
-		Matcher matcher = pattern.matcher(text);
+		final Pattern pattern = Pattern.compile("[\\w'-]+", Pattern.CASE_INSENSITIVE);
+		final Matcher matcher = pattern.matcher(text);
 
 		while (matcher.find()) {
 			word = matcher.group();
 
 			// HINT: may need to change if handling caps
-			boolean styleClass = dic.isWord(word);
+			final boolean styleClass = dic.isWord(word);
 			spansBuilder.add(true, matcher.start() - lastEnd);
 			spansBuilder.add(styleClass, matcher.end() - matcher.start());
 			lastEnd = matcher.end();
@@ -277,8 +277,8 @@ public class AutoSpellingTextArea extends StyledTextArea<Boolean> {
 	 * @param click
 	 *              - mouse click for displaying menu
 	 */
-	private void showSuggestions(String word, MouseEvent click) {
-		List<String> suggestions = ss.suggestions(word, NUM_SUGGESTIONS);
+	private void showSuggestions(final String word, final MouseEvent click) {
+		final List<String> suggestions = ss.suggestions(word, NUM_SUGGESTIONS);
 
 		// boolean array for matching case of use input
 		boolean[] caseFlags = null;
@@ -292,7 +292,7 @@ public class AutoSpellingTextArea extends StyledTextArea<Boolean> {
 
 		entriesPopup.getItems().clear();
 
-		List<CustomMenuItem> menuItems = createOptions(suggestions, caseFlags);
+		final List<CustomMenuItem> menuItems = createOptions(suggestions, caseFlags);
 
 		// check if no suggestions found
 		if (suggestions.size() == 0) {
@@ -309,7 +309,7 @@ public class AutoSpellingTextArea extends StyledTextArea<Boolean> {
 		// register event to add word
 		item.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
-			public void handle(ActionEvent actionEvent) {
+			public void handle(final ActionEvent actionEvent) {
 				// add word to both dictionaries
 				dic.addWord(word);
 				((spelling.Dictionary) ac).addWord(word);
@@ -325,7 +325,7 @@ public class AutoSpellingTextArea extends StyledTextArea<Boolean> {
 
 	}
 
-	private void showCompletions(String prefix) {
+	private void showCompletions(final String prefix) {
 		// keep track of prefix
 		// check if in middle of typing word
 		if (!prefix.equals("")) {
@@ -342,7 +342,7 @@ public class AutoSpellingTextArea extends StyledTextArea<Boolean> {
 					caseFlags = getCaseFlags(prefix);
 				}
 
-				List<CustomMenuItem> menuOptions = createOptions(options, caseFlags);
+				final List<CustomMenuItem> menuOptions = createOptions(options, caseFlags);
 
 				entriesPopup.getItems().clear();
 				entriesPopup.getItems().addAll(menuOptions);
@@ -363,7 +363,7 @@ public class AutoSpellingTextArea extends StyledTextArea<Boolean> {
 		}
 	}
 
-	public void setSpelling(boolean state) {
+	public void setSpelling(final boolean state) {
 		spellingOn = state;
 
 		if (state == true && getText().length() > 0) {
@@ -375,7 +375,7 @@ public class AutoSpellingTextArea extends StyledTextArea<Boolean> {
 		}
 	}
 
-	public void setAutoComplete(boolean state) {
+	public void setAutoComplete(final boolean state) {
 		autoCompleteOn = state;
 	}
 
@@ -386,9 +386,9 @@ public class AutoSpellingTextArea extends StyledTextArea<Boolean> {
 	 * @param word
 	 * @return boolean array for uppercase or null if none
 	 */
-	public boolean[] getCaseFlags(String word) {
+	public boolean[] getCaseFlags(final String word) {
 
-		boolean[] flags = new boolean[word.length()];
+		final boolean[] flags = new boolean[word.length()];
 
 		// for if should return array or null
 		boolean anyUpperCase = false;
@@ -418,12 +418,12 @@ public class AutoSpellingTextArea extends StyledTextArea<Boolean> {
 	 * @param flags
 	 * @return string with uppercase in true positions
 	 */
-	private String convertCaseUsingFlags(String word, boolean[] flags) {
-		StringBuilder sb = new StringBuilder(word);
+	private String convertCaseUsingFlags(final String word, final boolean[] flags) {
+		final StringBuilder sb = new StringBuilder(word);
 
 		for (int i = 0; i < flags.length && i < word.length(); i++) {
 			if (flags[i]) {
-				char c = sb.charAt(i);
+				final char c = sb.charAt(i);
 				sb.setCharAt(i, Character.toUpperCase(c));
 			}
 		}
@@ -432,7 +432,7 @@ public class AutoSpellingTextArea extends StyledTextArea<Boolean> {
 	}
 
 	// encapsulate Method.invoke method
-	private static Object invoke(Method m, Object obj, Object... args) {
+	private static Object invoke(final Method m, final Object obj, final Object... args) {
 		try {
 			return m.invoke(obj, args);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {

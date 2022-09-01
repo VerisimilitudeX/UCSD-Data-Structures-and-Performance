@@ -16,7 +16,7 @@ public class EfficientDocument extends Document {
 	private int numSentences; // The number of sentences in the document
 	private int numSyllables; // The number of syllables in the document
 
-	public EfficientDocument(String text) {
+	public EfficientDocument(final String text) {
 		super(text);
 		processText();
 	}
@@ -30,7 +30,7 @@ public class EfficientDocument extends Document {
 	 * @param tok The string to check
 	 * @return true if tok is a word, false if it is punctuation.
 	 */
-	private boolean isWord(String tok) {
+	private boolean isWord(final String tok) {
 		// Note: This is a fast way of checking whether a string is a word
 		// You probably don't want to change it.
 		return !(tok.indexOf("!") >= 0 || tok.indexOf(".") >= 0 || tok.indexOf("?") >= 0);
@@ -47,7 +47,7 @@ public class EfficientDocument extends Document {
 		// That is not a word or a sentence-ending puctuation.
 		// MAKE SURE YOU UNDERSTAND THIS LINE BEFORE YOU CODE THE REST
 		// OF THIS METHOD.
-		List<String> tokens = getTokens("[!?.]+|[a-zA-Z]+");
+		final List<String> tokens = getTokens("[!?.]+|[a-zA-Z]+");
 
 		// TODO: Finish this method. Remember the countSyllables method from
 		// Document. That will come in handy here. isWord defined above will also help.
@@ -117,7 +117,7 @@ public class EfficientDocument extends Document {
 
 	// Can be used for testing
 	// We encourage you to add your own tests here.
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		testCase(new EfficientDocument("This is a test.  How many???  "
 				+ "Senteeeeeeeeeences are here... there should be 5!  Right?"),
 				16, 13, 5);

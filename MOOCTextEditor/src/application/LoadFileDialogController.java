@@ -37,7 +37,7 @@ public class LoadFileDialogController {
 	 * 
 	 * @param dialogStage
 	 */
-	public void setDialogStage(Stage dialogStage) {
+	public void setDialogStage(final Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}
 
@@ -45,18 +45,18 @@ public class LoadFileDialogController {
 	 * Sets reference to TextArea
 	 * 
 	 */
-	public void setTextArea(AutoSpellingTextArea textBox) {
+	public void setTextArea(final AutoSpellingTextArea textBox) {
 		this.textBox = textBox;
 	}
 
 	@FXML
 	private void handleBrowse() {
-		FileChooser chooser = new FileChooser();
+		final FileChooser chooser = new FileChooser();
 
 		configureFileChooser(chooser);
 
 		// TEST SELECTING NEW FILE/OPENING CHOOSER AND CLOSING w/o selecting
-		File file = chooser.showOpenDialog(dialogStage);
+		final File file = chooser.showOpenDialog(dialogStage);
 
 		if (file != null) {
 			fileString = getStringFromFile(file);
@@ -69,7 +69,7 @@ public class LoadFileDialogController {
 	}
 
 	// set up file chooser
-	private void configureFileChooser(FileChooser fc) {
+	private void configureFileChooser(final FileChooser fc) {
 		fc.setTitle("Choose Text File...");
 
 		// set initial directory of file chooser
@@ -80,20 +80,20 @@ public class LoadFileDialogController {
 		fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT", "*.txt"));
 	}
 
-	private String getStringFromFile(File file) {
+	private String getStringFromFile(final File file) {
 		try {
-			BufferedReader buf = new BufferedReader(new FileReader(file));
+			final BufferedReader buf = new BufferedReader(new FileReader(file));
 			String str;
-			StringBuilder sb = new StringBuilder();
+			final StringBuilder sb = new StringBuilder();
 
 			while ((str = buf.readLine()) != null) {
 				sb.append(str).append('\n');
 			}
 			buf.close();
 			return sb.toString();
-		} catch (FileNotFoundException ex) {
+		} catch (final FileNotFoundException ex) {
 			// file not found
-		} catch (IOException ex) {
+		} catch (final IOException ex) {
 
 		}
 

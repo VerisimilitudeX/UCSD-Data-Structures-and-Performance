@@ -12,7 +12,7 @@ import java.util.Scanner;
  */
 public class DictionaryHashSet implements Dictionary {
 
-	private HashSet<String> words;
+	private final HashSet<String> words;
 
 	public DictionaryHashSet() {
 		words = new HashSet<String>();
@@ -26,7 +26,7 @@ public class DictionaryHashSet implements Dictionary {
 	 *         (it wasn't already there).
 	 */
 	@Override
-	public boolean addWord(String word) {
+	public boolean addWord(final String word) {
 		return words.add(word.toLowerCase());
 	}
 
@@ -38,7 +38,7 @@ public class DictionaryHashSet implements Dictionary {
 
 	/** Is this a word according to this dictionary? */
 	@Override
-	public boolean isWord(String s) {
+	public boolean isWord(final String s) {
 		return words.contains(s.toLowerCase());
 	}
 

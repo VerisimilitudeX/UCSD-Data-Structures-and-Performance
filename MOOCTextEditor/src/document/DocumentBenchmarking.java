@@ -13,26 +13,26 @@ import java.io.InputStreamReader;
 
 public class DocumentBenchmarking {
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 
 		// Run each test more than once to get bigger numbers and less noise.
 		// You can try playing around with this number.
-		int trials = 100;
+		final int trials = 100;
 
 		// The text to test on
-		String textfile = "data/warAndPeace.txt";
+		final String textfile = "data/warAndPeace.txt";
 
 		// The amount of characters to increment each step
 		// You can play around with this
-		int increment = 20000;
+		final int increment = 20000;
 
 		// The number of steps to run.
 		// You can play around with this.
-		int numSteps = 20;
+		final int numSteps = 20;
 
 		// THe number of characters to start with.
 		// You can play around with this.
-		int start = 50000;
+		final int start = 50000;
 
 		// TODO: Fill in the rest of this method so that it runs two loops
 		// and prints out timing results as described in the assignment
@@ -70,13 +70,13 @@ public class DocumentBenchmarking {
 	 * @return The text string from the file with the appropriate number of
 	 *         characters
 	 */
-	public static String getStringFromFile(String filename, int numChars) {
+	public static String getStringFromFile(final String filename, final int numChars) {
 
-		StringBuffer s = new StringBuffer();
+		final StringBuffer s = new StringBuffer();
 		try {
-			FileInputStream inputFile = new FileInputStream(filename);
-			InputStreamReader inputStream = new InputStreamReader(inputFile);
-			BufferedReader bis = new BufferedReader(inputStream);
+			final FileInputStream inputFile = new FileInputStream(filename);
+			final InputStreamReader inputStream = new InputStreamReader(inputFile);
+			final BufferedReader bis = new BufferedReader(inputStream);
 			int val;
 			int count = 0;
 			while ((val = bis.read()) != -1 && count < numChars) {
@@ -87,7 +87,7 @@ public class DocumentBenchmarking {
 				System.out.println("Warning: End of file reached at " + count + " characters.");
 			}
 			bis.close();
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			System.out.println(e);
 			System.exit(0);
 		}

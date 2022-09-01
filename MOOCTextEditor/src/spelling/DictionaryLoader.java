@@ -13,7 +13,7 @@ public class DictionaryLoader {
      * @param filename The file containing the words to load. Each word must be on a
      *                 separate line.
      */
-    public static void loadDictionary(Dictionary d, String filename) {
+    public static void loadDictionary(final Dictionary d, final String filename) {
         // Dictionary files have 1 word per line
         BufferedReader reader = null;
         try {
@@ -22,7 +22,7 @@ public class DictionaryLoader {
             while ((nextWord = reader.readLine()) != null) {
                 d.addWord(nextWord);
             }
-        } catch (IOException e) {
+        } catch (final IOException e) {
             System.err.println("Problem loading dictionary file: " + filename);
             e.printStackTrace();
         }
@@ -38,7 +38,7 @@ public class DictionaryLoader {
      * @param nWords   The number of words to load. It will load the first nWords
      *                 words
      */
-    public static void loadDictionary(Dictionary d, String filename, int nWords) {
+    public static void loadDictionary(final Dictionary d, final String filename, final int nWords) {
         // Dictionary files have 1 word per line
         BufferedReader reader = null;
         try {
@@ -53,7 +53,7 @@ public class DictionaryLoader {
                 System.out.print("loadDicitonary Warning: End of dictionary file reached.  ");
                 System.out.println(nWords + " requested, but only " + numLoaded + " words loaded.");
             }
-        } catch (IOException e) {
+        } catch (final IOException e) {
             System.err.println("Problem loading dictionary file: " + filename);
             e.printStackTrace();
         }

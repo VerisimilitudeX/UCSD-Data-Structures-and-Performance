@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public abstract class Document {
 
-	private String text;
+	protected final String text;
 
 	/**
 	 * Create a new document from the given text.
@@ -19,7 +19,7 @@ public abstract class Document {
 	 * 
 	 * @param text The text of the document.
 	 */
-	protected Document(String text) {
+	protected Document(final String text) {
 		this.text = text;
 	}
 
@@ -32,10 +32,10 @@ public abstract class Document {
 	 * @return A List of tokens from the document text that match the regex
 	 *         pattern
 	 */
-	protected List<String> getTokens(String pattern) {
-		ArrayList<String> tokens = new ArrayList<String>();
-		Pattern tokSplitter = Pattern.compile(pattern);
-		Matcher m = tokSplitter.matcher(text);
+	protected List<String> getTokens(final String pattern) {
+		final ArrayList<String> tokens = new ArrayList<String>();
+		final Pattern tokSplitter = Pattern.compile(pattern);
+		final Matcher m = tokSplitter.matcher(text);
 
 		while (m.find()) {
 			tokens.add(m.group());
@@ -66,11 +66,28 @@ public abstract class Document {
 	 *         is not considered a syllable unless the word has no other syllables.
 	 *         You should consider y a vowel.
 	 */
-	protected int countSyllables(String word) {
-		// TODO: Implement this method so that you can call it from the
-		// getNumSyllables method in BasicDocument (module 2) and
-		// EfficientDocument (module 3).
-		return 0;
+	protected int countSyllables(final String word) {
+		//System.out.print("Counting syllables in " + word + "...");
+		int numSyllables = 0;
+		boolean newSyllable = true;
+		final String vowels = "aeiouy";
+		final char[] cArray = word.toCharArray();
+		for (int i = 0; i < cArray.length; i++)
+		{
+		    if (i == cArray.length-1 && Character.toLowerCase(cArray[i]) == 'e' 
+		    		&& newSyllable && numSyllables > 0) {
+                numSyllables--;
+            }
+		    if (newSyllable && vowels.indexOf(Character.toLowerCase(cArray[i])) >= 0) {
+				newSyllable = false;
+				numSyllables++;
+			}
+			else if (vowels.indexOf(Character.toLowerCase(cArray[i])) < 0) {
+				newSyllable = true;
+			}
+		}
+		//System.out.println( "found " + numSyllables);
+		return numSyllables;
 	}
 
 	/**
@@ -82,13 +99,13 @@ public abstract class Document {
 	 * @param sentences The expected number of sentences
 	 * @return true if the test case passed. False otherwise.
 	 */
-	public static boolean testCase(Document doc, int syllables, int words, int sentences) {
+	public static boolean testCase(final Document doc, final int syllables, final int words, final int sentences) {
 		System.out.println("Testing text: ");
 		System.out.print(doc.getText() + "\n....");
 		boolean passed = true;
-		int syllFound = doc.getNumSyllables();
-		int wordsFound = doc.getNumWords();
-		int sentFound = doc.getNumSentences();
+		final int syllFound = doc.getNumSyllables();
+		final int wordsFound = doc.getNumWords();
+		final int sentFound = doc.getNumSentences();
 		if (syllFound != syllables) {
 			System.out.println("\nIncorrect number of syllables.  Found " + syllFound
 					+ ", expected " + syllables);

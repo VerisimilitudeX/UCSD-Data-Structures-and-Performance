@@ -5,23 +5,23 @@ import java.util.ArrayList;
 import java.io.PrintWriter;
 
 public class NearbyWordsGraderTwo {
-    public static void main(String args[]) {
-        int tests = 0;
-        int incorrect = 0;
+    public static void main(final String args[]) {
+        final int tests = 0;
+        final int incorrect = 0;
         String feedback = "";
         PrintWriter out;
 
         try {
             out = new PrintWriter("grader_output/module5.part2.out");
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
             return;
         }
 
         try {
-            Dictionary d = new DictionaryHashSet();
+            final Dictionary d = new DictionaryHashSet();
             DictionaryLoader.loadDictionary(d, "test_cases/dict2.txt");
-            NearbyWords nw = new NearbyWords(d);
+            final NearbyWords nw = new NearbyWords(d);
 
             feedback += "** Test 1: 2 suggestions... ";
             List<String> d1 = nw.suggestions("dag", 4);
@@ -29,7 +29,7 @@ public class NearbyWordsGraderTwo {
 
             feedback += "** Test 2: Checking suggestion correctness... ";
             feedback += "Suggestions: ";
-            for (String i : d1) {
+            for (final String i : d1) {
                 feedback += i + ", ";
             }
 
@@ -39,12 +39,12 @@ public class NearbyWordsGraderTwo {
 
             feedback += "** Test 4: Checking suggestion correctness... ";
             feedback += "Suggestions: ";
-            for (String i : d1) {
+            for (final String i : d1) {
                 feedback += i + ", ";
             }
             feedback += "\n";
 
-        } catch (Exception e) {
+        } catch (final Exception e) {
             out.println(feedback + "Runtime error: " + e);
             return;
         }

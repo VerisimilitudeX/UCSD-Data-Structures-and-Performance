@@ -15,7 +15,7 @@ import java.util.LinkedList;
  */
 public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 
-	private TrieNode root;
+	private final TrieNode root;
 	private int size;
 
 	public AutoCompleteDictionaryTrie() {
@@ -37,7 +37,7 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 	 * @return true if the word was successfully added or false if it already exists
 	 *         in the dictionary.
 	 */
-	public boolean addWord(String word) {
+	public boolean addWord(final String word) {
 		// TODO: Implement this method.
 		return false;
 	}
@@ -57,7 +57,7 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 	 * described in the videos for this week.
 	 */
 	@Override
-	public boolean isWord(String s) {
+	public boolean isWord(final String s) {
 		// TODO: Implement this method
 		return false;
 	}
@@ -84,7 +84,7 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 	 * @return A list containing the up to numCompletions best predictions
 	 */
 	@Override
-	public List<String> predictCompletions(String prefix, int numCompletions) {
+	public List<String> predictCompletions(final String prefix, final int numCompletions) {
 		// TODO: Implement this method
 		// This method should implement the following algorithm:
 		// 1. Find the stem in the trie. If the stem does not appear in the trie, return
@@ -112,14 +112,14 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 	}
 
 	/** Do a pre-order traversal from this node down */
-	public void printNode(TrieNode curr) {
+	public void printNode(final TrieNode curr) {
 		if (curr == null)
 			return;
 
 		System.out.println(curr.getText());
 
 		TrieNode next = null;
-		for (Character c : curr.getValidNextCharacters()) {
+		for (final Character c : curr.getValidNextCharacters()) {
 			next = curr.getChild(c);
 			printNode(next);
 		}

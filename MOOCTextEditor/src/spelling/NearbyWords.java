@@ -20,7 +20,7 @@ public class NearbyWords implements SpellingSuggest {
 
 	Dictionary dict;
 
-	public NearbyWords(Dictionary dict) {
+	public NearbyWords(final Dictionary dict) {
 		this.dict = dict;
 	}
 
@@ -32,8 +32,8 @@ public class NearbyWords implements SpellingSuggest {
 	 * @param wordsOnly controls whether to return only words or any String
 	 * @return list of Strings which are nearby the original string
 	 */
-	public List<String> distanceOne(String s, boolean wordsOnly) {
-		List<String> retList = new ArrayList<String>();
+	public List<String> distanceOne(final String s, final boolean wordsOnly) {
+		final List<String> retList = new ArrayList<String>();
 		insertions(s, retList, wordsOnly);
 		substitution(s, retList, wordsOnly);
 		deletions(s, retList, wordsOnly);
@@ -49,13 +49,13 @@ public class NearbyWords implements SpellingSuggest {
 	 * @param wordsOnly   controls whether to return only words or any String
 	 * @return
 	 */
-	public void substitution(String s, List<String> currentList, boolean wordsOnly) {
+	public void substitution(final String s, final List<String> currentList, final boolean wordsOnly) {
 		// for each letter in the s and for all possible replacement characters
 		for (int index = 0; index < s.length(); index++) {
 			for (int charCode = (int) 'a'; charCode <= (int) 'z'; charCode++) {
 				// use StringBuffer for an easy interface to permuting the
 				// letters in the String
-				StringBuffer sb = new StringBuffer(s);
+				final StringBuffer sb = new StringBuffer(s);
 				sb.setCharAt(index, (char) charCode);
 
 				// if the item isn't in the list, isn't the original string, and
@@ -78,7 +78,7 @@ public class NearbyWords implements SpellingSuggest {
 	 * @param wordsOnly   controls whether to return only words or any String
 	 * @return
 	 */
-	public void insertions(String s, List<String> currentList, boolean wordsOnly) {
+	public void insertions(final String s, final List<String> currentList, final boolean wordsOnly) {
 		// TODO: Implement this method
 	}
 
@@ -91,7 +91,7 @@ public class NearbyWords implements SpellingSuggest {
 	 * @param wordsOnly   controls whether to return only words or any String
 	 * @return
 	 */
-	public void deletions(String s, List<String> currentList, boolean wordsOnly) {
+	public void deletions(final String s, final List<String> currentList, final boolean wordsOnly) {
 		// TODO: Implement this method
 	}
 
@@ -104,13 +104,13 @@ public class NearbyWords implements SpellingSuggest {
 	 * @return the list of spelling suggestions
 	 */
 	@Override
-	public List<String> suggestions(String word, int numSuggestions) {
+	public List<String> suggestions(final String word, final int numSuggestions) {
 
 		// initial variables
-		List<String> queue = new LinkedList<String>(); // String to explore
-		HashSet<String> visited = new HashSet<String>(); // to avoid exploring the same
+		final List<String> queue = new LinkedList<String>(); // String to explore
+		final HashSet<String> visited = new HashSet<String>(); // to avoid exploring the same
 															// string multiple times
-		List<String> retList = new LinkedList<String>(); // words to return
+		final List<String> retList = new LinkedList<String>(); // words to return
 
 		// insert first node
 		queue.add(word);
@@ -122,7 +122,7 @@ public class NearbyWords implements SpellingSuggest {
 
 	}
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		/*
 		 * basic testing code to get started
 		 * String word = "i";
