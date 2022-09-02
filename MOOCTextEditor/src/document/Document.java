@@ -66,12 +66,13 @@ public abstract class Document {
 	 *         is not considered a syllable unless the word has no other syllables.
 	 *         You should consider y a vowel.
 	 */
-	protected int countSyllables(final String word) {
-		//System.out.print("Counting syllables in " + word + "...");
+	protected static int countSyllables(String word)
+	{
+	    //System.out.print("Counting syllables in " + word + "...");
 		int numSyllables = 0;
 		boolean newSyllable = true;
-		final String vowels = "aeiouy";
-		final char[] cArray = word.toCharArray();
+		String vowels = "aeiouy";
+		char[] cArray = word.toCharArray();
 		for (int i = 0; i < cArray.length; i++)
 		{
 		    if (i == cArray.length-1 && Character.toLowerCase(cArray[i]) == 'e' 
