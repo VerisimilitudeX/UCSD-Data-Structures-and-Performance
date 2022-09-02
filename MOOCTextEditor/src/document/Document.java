@@ -149,7 +149,7 @@ public abstract class Document {
 	public double getFleschScore() {
 		
 		// Flesch Score Formula
-		return 206.835 - 1.015 * (getNumWords() / getNumSentences()) - 84.6 * (getNumSyllables() / getNumWords());
+		return (206.835 - (1.015 * getNumWords() * 1.0 / getNumSentences()) - (84.6 * getNumSyllables() * 1.0 / getNumWords()));
 	}
 
 }
