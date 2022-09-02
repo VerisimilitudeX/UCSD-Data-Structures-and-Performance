@@ -31,7 +31,9 @@ public class BasicDocument extends Document {
 	 */
 	@Override
 	public int getNumWords() {
-		return text.split("[a-zA-Z]+").length;
+		String pattern = "[a-zA-Z]+";
+		List<String> tokenizeByWords = getTokens(pattern);
+		return tokenizeByWords.size();
 	}
 
 	/**
@@ -46,10 +48,9 @@ public class BasicDocument extends Document {
 	 */
 	@Override
 	public int getNumSentences() {
-		text.split("[.!?]");
-		// TODO: Implement this method. See the Module 2 support videos
-		// if you need help.
-		return 0;
+		String pattern = "[^.!?]+";
+		List<String> tokenizeBySentences = getTokens(pattern);
+		return tokenizeBySentences.size();
 	}
 
 	/**
@@ -73,11 +74,14 @@ public class BasicDocument extends Document {
 		// expression for the syllable counting. We recommend you implement
 		// the helper function countSyllables in Document.java using a loop,
 		// and then call it here on each word.		
-		int totalSyllables = 0;
-		for (String word : text.split(" ")) {
-			totalSyllables += countSyllables(word);
+		String pattern = "[a-zA-Z]+";
+		List<String> tokenizeByWords = getTokens(pattern);
+		int numSyllables = 0;
+		for(int i = 0; i < tokenizeByWords.size(); i++){
+			String lowerCase = tokenizeByWords.get(i).toLowerCase();
+			numSyllables += countSyllables( lowerCase );
 		}
-		return totalSyllables;
+        return numSyllables;
 	}
 
 	/*

@@ -30,7 +30,7 @@ public class MainApp extends Application {
 
 		this.primaryStage = primaryStage;
 
-		this.primaryStage.setTitle("TextProApp");
+		this.primaryStage.setTitle("VerisiNotes");
 
 		try {
 			// Load root layout from fxml
