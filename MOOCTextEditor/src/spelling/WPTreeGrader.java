@@ -3,70 +3,70 @@ package spelling;
 import java.io.PrintWriter;
 import java.util.List;
 
-// The specific grader used in this test is called "grader_dict.txt", 
-// which is in the data folder. When submitting your WPTree.java file, 
+// The specific grader used in this test is called "grader_dict.txt",
+// which is in the data folder. When submitting your WPTree.java file,
 // make sure it still points to data/dict.txt.
 
 public class WPTreeGrader {
-    public static String printPath(final List<String> path) {
-        if (path == null) {
-            return "NULL PATH";
-        }
-        String ret = "";
-        for (int i = 0; i < path.size(); i++) {
-            ret += path.get(i);
-            if (i < path.size() - 1) {
-                ret += ", ";
-            }
-        }
-        return ret;
+  public static String printPath(final List<String> path) {
+    if (path == null) {
+      return "NULL PATH";
+    }
+    String ret = "";
+    for (int i = 0; i < path.size(); i++) {
+      ret += path.get(i);
+      if (i < path.size() - 1) {
+        ret += ", ";
+      }
+    }
+    return ret;
+  }
+
+  public static void main(final String[] args) {
+    final int incorrect = 0;
+    final int tests = 0;
+    String feedback = "";
+
+    PrintWriter out;
+    try {
+      out = new PrintWriter("grader_output/module5.part3.out");
+    } catch (final Exception e) {
+      e.printStackTrace();
+      return;
     }
 
-    public static void main(final String[] args) {
-        final int incorrect = 0;
-        final int tests = 0;
-        String feedback = "";
+    try {
 
-        PrintWriter out;
-        try {
-            out = new PrintWriter("grader_output/module5.part3.out");
-        } catch (final Exception e) {
-            e.printStackTrace();
-            return;
-        }
+      final Dictionary dict = new DictionaryHashSet();
+      DictionaryLoader.loadDictionary(dict, "data/grader_dict.txt");
+      final WPTree tree = new WPTree(new NearbyWords(dict));
 
-        try {
+      List<String> path = tree.findPath("pool", "spoon");
 
-            final Dictionary dict = new DictionaryHashSet();
-            DictionaryLoader.loadDictionary(dict, "data/grader_dict.txt");
-            final WPTree tree = new WPTree(new NearbyWords(dict));
+      feedback += "** Test #1: Testing short path...";
+      feedback += "Your path was: " + printPath(path) + ".\n";
 
-            List<String> path = tree.findPath("pool", "spoon");
+      path = tree.findPath("stools", "moon");
 
-            feedback += "** Test #1: Testing short path...";
-            feedback += "Your path was: " + printPath(path) + ".\n";
+      feedback += "** Test #2: Testing long path...";
+      feedback += "Your path was: " + printPath(path) + ".\n";
 
-            path = tree.findPath("stools", "moon");
+      path = tree.findPath("foal", "needless");
 
-            feedback += "** Test #2: Testing long path...";
-            feedback += "Your path was: " + printPath(path) + ".\n";
+      feedback += "** Test #3: Testing impossible path...";
+      feedback += "Your path was: " + printPath(path) + ".\n";
 
-            path = tree.findPath("foal", "needless");
+      path = tree.findPath("needle", "kitten");
 
-            feedback += "** Test #3: Testing impossible path...";
-            feedback += "Your path was: " + printPath(path) + ".\n";
-
-            path = tree.findPath("needle", "kitten");
-
-            feedback += "** Test #4: Testing using a nonexistent word...";
-            feedback += "Your path was: " + printPath(path) + ".\n";
-        } catch (final Exception e) {
-            out.println(e);
-            out.close();
-            return;
-        }
-
-        out.println(feedback + "Tests complete. Make sure everything looks right.");
-        out.close();
+      feedback += "** Test #4: Testing using a nonexistent word...";
+      feedback += "Your path was: " + printPath(path) + ".\n";
+    } catch (final Exception e) {
+      out.println(e);
+      out.close();
+      return;
     }
+
+    out.println(feedback + "Tests complete. Make sure everything looks right.");
+    out.close();
+  }
 }

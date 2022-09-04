@@ -1,7 +1,6 @@
 package application;
 
 import java.util.function.Consumer;
-
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -17,230 +16,228 @@ import javafx.stage.Stage;
 
 public class TextProController {
 
-	private final static double DEFAULT_SPACING = 55;
-	private final static double CONTROL_HEIGHT = 132;
-	private final static double SPACE_DIV = 8.5;
-	private final static double BUTTON_WIDTH = 160.0;
-	private final static double RBOX_THRESHOLD = 520; // threshold to change spacing of right VBox
+  private static final double DEFAULT_SPACING = 55;
+  private static final double CONTROL_HEIGHT = 132;
+  private static final double SPACE_DIV = 8.5;
+  private static final double BUTTON_WIDTH = 160.0;
+  private static final double RBOX_THRESHOLD = 520; // threshold to change spacing of right VBox
 
-	// used when showing new stage/scene
-	private MainApp mainApp;
+  // used when showing new stage/scene
+  private MainApp mainApp;
 
-	// used for getting new objects
-	private LaunchClass launch;
+  // used for getting new objects
+  private LaunchClass launch;
 
-	// UI Controls
-	private AutoSpellingTextArea textBox;
+  // UI Controls
+  private AutoSpellingTextArea textBox;
 
-	@FXML
-	private VBox leftPane;
+  @FXML private VBox leftPane;
 
-	@FXML
-	private VBox rightBox;
+  @FXML private VBox rightBox;
 
-	@FXML
-	private HBox container;
+  @FXML private HBox container;
 
-	@FXML
-	private Label fLabel;
+  @FXML private Label fLabel;
 
-	@FXML
-	private Pane bufferPane;
+  @FXML private Pane bufferPane;
 
-	@FXML
-	private TextField fleschField;
+  @FXML private TextField fleschField;
 
-	@FXML
-	private CheckBox autocompleteBox;
+  @FXML private CheckBox autocompleteBox;
 
-	@FXML
-	private CheckBox spellingBox;
+  @FXML private CheckBox spellingBox;
 
-	// private Node
+  // private Node
 
-	/**
-	 * Initializes the controller class. This method is automatically called
-	 * after the fxml file has been loaded.
-	 * 
-	 * Initialize and add text area to application
-	 */
-	@FXML
-	private void initialize() {
-		// make field displaying flesch score read-only
-		fleschField.setEditable(false);
+  /**
+   * Initializes the controller class. This method is automatically called after the fxml file has
+   * been loaded.
+   *
+   * <p>Initialize and add text area to application
+   */
+  @FXML
+  private void initialize() {
+    // make field displaying flesch score read-only
+    fleschField.setEditable(false);
 
-		launch = new LaunchClass();
+    launch = new LaunchClass();
 
-		// instantiate and add custom text area
-		final spelling.Dictionary dic = launch.getDictionary();
-		textBox = new AutoSpellingTextArea(launch.getAutoComplete(), launch.getSpellingSuggest(dic), dic);
-		textBox.setPrefSize(570, 492);
-		textBox.setStyle("-fx-font-size: 14px");
+    // instantiate and add custom text area
+    final spelling.Dictionary dic = launch.getDictionary();
+    textBox =
+        new AutoSpellingTextArea(launch.getAutoComplete(), launch.getSpellingSuggest(dic), dic);
+    textBox.setPrefSize(570, 492);
+    textBox.setStyle("-fx-font-size: 14px");
 
-		textBox.setWrapText(true);
+    textBox.setWrapText(true);
 
-		// add text area as first child of left VBox
-		final ObservableList<Node> nodeList = leftPane.getChildren();
-		final Node firstChild = nodeList.get(0);
-		nodeList.set(0, textBox);
-		nodeList.add(firstChild);
+    // add text area as first child of left VBox
+    final ObservableList<Node> nodeList = leftPane.getChildren();
+    final Node firstChild = nodeList.get(0);
+    nodeList.set(0, textBox);
+    nodeList.add(firstChild);
 
-		VBox.setVgrow(textBox, Priority.ALWAYS);
+    VBox.setVgrow(textBox, Priority.ALWAYS);
 
-		// ADD LISTENERS FOR ADJUSTING ON RESIZE
+    // ADD LISTENERS FOR ADJUSTING ON RESIZE
 
-		container.widthProperty().addListener(li -> {
+    container
+        .widthProperty()
+        .addListener(
+            li -> {
+              if ((container.getWidth() - leftPane.getPrefWidth()) < BUTTON_WIDTH) {
+                rightBox.setVisible(false);
+              } else {
+                rightBox.setVisible(true);
+              }
+            });
 
-			if ((container.getWidth() - leftPane.getPrefWidth()) < BUTTON_WIDTH) {
-				rightBox.setVisible(false);
-			} else {
-				rightBox.setVisible(true);
-			}
-		});
+    // function for setting spacing of rightBox
+    final Consumer<VBox> adjustSpacing =
+        box -> {
+          if (container.getHeight() < RBOX_THRESHOLD) {
+            rightBox.setSpacing((container.getHeight() - CONTROL_HEIGHT) / SPACE_DIV);
+          } else {
+            rightBox.setSpacing(DEFAULT_SPACING);
+          }
+        };
 
-		// function for setting spacing of rightBox
-		final Consumer<VBox> adjustSpacing = box -> {
-			if (container.getHeight() < RBOX_THRESHOLD) {
-				rightBox.setSpacing((container.getHeight() - CONTROL_HEIGHT) / SPACE_DIV);
-			} else {
-				rightBox.setSpacing(DEFAULT_SPACING);
-			}
-		};
+    container
+        .heightProperty()
+        .addListener(
+            li -> {
+              adjustSpacing.accept(rightBox);
+            });
 
-		container.heightProperty().addListener(li -> {
-			adjustSpacing.accept(rightBox);
-		});
+    rightBox
+        .visibleProperty()
+        .addListener(
+            li -> {
+              if (rightBox.isVisible()) {
+                container.getChildren().add(rightBox);
+                adjustSpacing.accept(rightBox);
+              } else {
+                container.getChildren().remove(rightBox);
+              }
+            });
+  }
 
-		rightBox.visibleProperty().addListener(li -> {
-			if (rightBox.isVisible()) {
-				container.getChildren().add(rightBox);
-				adjustSpacing.accept(rightBox);
-			} else {
-				container.getChildren().remove(rightBox);
-			}
-		});
-	}
+  /**
+   * Is called by the main application to give a reference back to itself. Also give reference to
+   * AutoSpellingTextArea
+   *
+   * @param mainApp
+   */
+  public void setMainApp(final MainApp mainApp) {
+    this.mainApp = mainApp;
+  }
 
-	/**
-	 * Is called by the main application to give a reference back to itself.
-	 * Also give reference to AutoSpellingTextArea
-	 * 
-	 * 
-	 * @param mainApp
-	 */
-	public void setMainApp(final MainApp mainApp) {
-		this.mainApp = mainApp;
+  @FXML
+  private void handleFleschIndex() {
+    final String text = textBox.getText();
+    double fIndex = 0;
 
-	}
+    // check if text input
+    if (!text.equals("")) {
 
-	@FXML
-	private void handleFleschIndex() {
-		final String text = textBox.getText();
-		double fIndex = 0;
+      // create Document representation of current text
+      final document.Document doc = launch.getDocument(text);
 
-		// check if text input
-		if (!text.equals("")) {
+      fIndex = doc.getFleschScore();
 
-			// create Document representation of current text
-			final document.Document doc = launch.getDocument(text);
+      // get string with two decimal places for index to
+      final String fString = String.format("%.2f", fIndex);
 
-			fIndex = doc.getFleschScore();
+      // display string in text field
+      fleschField.setText(fString);
 
-			// get string with two decimal places for index to
-			final String fString = String.format("%.2f", fIndex);
+    } else {
+      // reset text field
+      fleschField.setText("");
+      mainApp.showInputErrorDialog("No text entered.");
+    }
+  }
 
-			// display string in text field
-			fleschField.setText(fString);
+  @FXML
+  private void handleLoadText() {
+    // return string??
+    mainApp.showLoadFileDialog(textBox);
 
-		} else {
-			// reset text field
-			fleschField.setText("");
-			mainApp.showInputErrorDialog("No text entered.");
+    // textBox.appendText(text);
 
-		}
+  }
 
-	}
+  @FXML
+  private void handleEditDistance() {
+    final String selectedText = textBox.getSelectedText();
+    mainApp.showEditDistanceDialog(selectedText);
+  }
 
-	@FXML
-	private void handleLoadText() {
-		// return string??
-		mainApp.showLoadFileDialog(textBox);
+  @FXML
+  private void handleMarkovText() {
+    // get MTG object
+    final textgen.MarkovTextGenerator mtg = launch.getMTG();
 
-		// textBox.appendText(text);
+    final Task<textgen.MarkovTextGenerator> task =
+        new Task<textgen.MarkovTextGenerator>() {
+          @Override
+          public textgen.MarkovTextGenerator call() {
+            // process long-running computation, data retrieval, etc...
 
-	}
+            mtg.retrain(textBox.getText());
+            return mtg;
+          }
+        };
 
-	@FXML
-	private void handleEditDistance() {
-		final String selectedText = textBox.getSelectedText();
-		mainApp.showEditDistanceDialog(selectedText);
+    // stage for load dialog
+    final Stage loadStage = new Stage();
 
-	}
+    // consume close request until task is finished
+    loadStage.setOnCloseRequest(
+        e -> {
+          if (!task.isDone()) {
+            e.consume();
+          }
+        });
 
-	@FXML
-	private void handleMarkovText() {
-		// get MTG object
-		final textgen.MarkovTextGenerator mtg = launch.getMTG();
+    // show loading dialog when task is running
+    task.setOnRunning(
+        e -> {
+          mainApp.showLoadStage(loadStage, "Training MTG...");
+        });
 
-		final Task<textgen.MarkovTextGenerator> task = new Task<textgen.MarkovTextGenerator>() {
-			@Override
-			public textgen.MarkovTextGenerator call() {
-				// process long-running computation, data retrieval, etc...
+    // MTG trained, close loading dialog, show MTG dialog
+    task.setOnSucceeded(
+        e -> {
+          loadStage.close();
+          final textgen.MarkovTextGenerator result = task.getValue();
+          mainApp.showMarkovDialog(result);
+        });
 
-				mtg.retrain(textBox.getText());
-				return mtg;
-			}
-		};
+    final Thread thread = new Thread(task);
+    thread.start();
+  }
 
-		// stage for load dialog
-		final Stage loadStage = new Stage();
+  @FXML
+  private void handleAutoComplete() {
+    if (autocompleteBox.isSelected()) {
+      textBox.setAutoComplete(true);
+    } else {
+      textBox.setAutoComplete(false);
+    }
+  }
 
-		// consume close request until task is finished
-		loadStage.setOnCloseRequest(e -> {
-			if (!task.isDone()) {
-				e.consume();
-			}
-		});
+  @FXML
+  private void handleSpelling() {
+    if (spellingBox.isSelected()) {
+      textBox.setSpelling(true);
+    } else {
+      textBox.setSpelling(false);
+    }
+  }
 
-		// show loading dialog when task is running
-		task.setOnRunning(e -> {
-			mainApp.showLoadStage(loadStage, "Training MTG...");
-		});
-
-		// MTG trained, close loading dialog, show MTG dialog
-		task.setOnSucceeded(e -> {
-			loadStage.close();
-			final textgen.MarkovTextGenerator result = task.getValue();
-			mainApp.showMarkovDialog(result);
-		});
-
-		final Thread thread = new Thread(task);
-		thread.start();
-
-	}
-
-	@FXML
-	private void handleAutoComplete() {
-		if (autocompleteBox.isSelected()) {
-			textBox.setAutoComplete(true);
-		} else {
-			textBox.setAutoComplete(false);
-		}
-	}
-
-	@FXML
-	private void handleSpelling() {
-		if (spellingBox.isSelected()) {
-			textBox.setSpelling(true);
-		} else {
-			textBox.setSpelling(false);
-		}
-
-	}
-
-	@FXML
-	private void handleClear() {
-		textBox.clear();
-	}
-
+  @FXML
+  private void handleClear() {
+    textBox.clear();
+  }
 }
