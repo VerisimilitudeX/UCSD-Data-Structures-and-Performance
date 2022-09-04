@@ -2,64 +2,61 @@ package spelling;
 
 /**
  * A class for timing the Dictionary Implementations
- * 
- * @author UC San Diego Intermediate Programming MOOC team
  *
+ * @author UC San Diego Intermediate Programming MOOC team
  */
-
 public class DictionaryBenchmarking {
 
-	public static void main(final String[] args) {
+  public static void main(final String[] args) {
 
-		// Run each test more than once to get bigger numbers and less noise.
-		// You can try playing around with this number.
-		final int trials = 500;
+    // Run each test more than once to get bigger numbers and less noise.
+    // You can try playing around with this number.
+    final int trials = 500;
 
-		// The text to test on
-		final String dictFile = "data/dict.txt";
+    // The text to test on
+    final String dictFile = "data/dict.txt";
 
-		// The amount of words to increment each step
-		// You can play around with this
-		final int increment = 2000;
+    // The amount of words to increment each step
+    // You can play around with this
+    final int increment = 2000;
 
-		// The number of steps to run.
-		// You can play around with this.
-		final int numSteps = 20;
+    // The number of steps to run.
+    // You can play around with this.
+    final int numSteps = 20;
 
-		// The number of words to start with.
-		// You can play around with this.
-		final int start = 50000;
+    // The number of words to start with.
+    // You can play around with this.
+    final int start = 50000;
 
-		final String notInDictionary = "notaword";
+    final String notInDictionary = "notaword";
 
-		// TODO: Play around with the numbers above and graph the output to see trends
-		// in the data
-		for (int numToCheck = start; numToCheck < numSteps * increment + start; numToCheck += increment) {
-			// Time the creation of finding a word that is not in the dictionary.
-			final DictionaryLL llDict = new DictionaryLL();
-			final DictionaryBST bstDict = new DictionaryBST();
+    // TODO: Play around with the numbers above and graph the output to see trends
+    // in the data
+    for (int numToCheck = start;
+        numToCheck < numSteps * increment + start;
+        numToCheck += increment) {
+      // Time the creation of finding a word that is not in the dictionary.
+      final DictionaryLL llDict = new DictionaryLL();
+      final DictionaryBST bstDict = new DictionaryBST();
 
-			DictionaryLoader.loadDictionary(llDict, dictFile, numToCheck);
-			DictionaryLoader.loadDictionary(bstDict, dictFile, numToCheck);
+      DictionaryLoader.loadDictionary(llDict, dictFile, numToCheck);
+      DictionaryLoader.loadDictionary(bstDict, dictFile, numToCheck);
 
-			long startTime = System.nanoTime();
-			for (int i = 0; i < trials; i++) {
-				llDict.isWord(notInDictionary);
-			}
-			long endTime = System.nanoTime();
-			final long timeLL = (endTime - startTime);
+      long startTime = System.nanoTime();
+      for (int i = 0; i < trials; i++) {
+        llDict.isWord(notInDictionary);
+      }
+      long endTime = System.nanoTime();
+      final long timeLL = (endTime - startTime);
 
-			startTime = System.nanoTime();
-			for (int i = 0; i < trials; i++) {
-				bstDict.isWord(notInDictionary);
-			}
-			endTime = System.nanoTime();
-			final long timeBST = (endTime - startTime);
+      startTime = System.nanoTime();
+      for (int i = 0; i < trials; i++) {
+        bstDict.isWord(notInDictionary);
+      }
+      endTime = System.nanoTime();
+      final long timeBST = (endTime - startTime);
 
-			System.out.println(numToCheck + "\t" + timeLL + "\t" + timeBST);
-
-		}
-
-	}
-
+      System.out.println(numToCheck + "\t" + timeLL + "\t" + timeBST);
+    }
+  }
 }
