@@ -108,7 +108,6 @@ public class DocumentBenchmarking {
       bis.close();
     } catch (final Exception e) {
       System.out.println(e);
-      System.exit(0);
     }
 
     return s.toString();
